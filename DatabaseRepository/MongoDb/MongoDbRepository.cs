@@ -60,19 +60,28 @@ namespace DatabaseRespository.MongoDb
 
         public HashSet<I> GetAll()
         {
-            return _mongoCollection.Find(null).ToList() == null ? new HashSet<I>() : _mongoCollection.Find(null).ToList().ToHashSet();
+            FilterDefinition<I> filterDefinition = Builders<I>.Filter.Empty;
+
+            return Get(filterDefinition);
         }
 
         public HashSet<I> GetByField(FilterDefinition<I> filterDefinition)
         {
-            return _mongoCollection.Find(filterDefinition).ToList() == null ? new HashSet<I>() : _mongoCollection.Find(filterDefinition).ToList().ToHashSet();
+            return Get(filterDefinition);
         }
 
         public HashSet<I> GetById(HashSet<string> ids)
         {
-            FilterDefinition<I> filterDefinition = Builders<I>.Filter.In("id", ids);
+            FilterDefinition<I> filterDefinition = Builders<I>.Filter.In("Id", ids);
 
-            return _mongoCollection.Find(filterDefinition).ToList() == null ? new HashSet<I>() : _mongoCollection.Find(filterDefinition).ToList().ToHashSet();
+            return Get(filterDefinition);
+        }
+
+        private HashSet<I> Get(FilterDefinition<I> filterDefinition)
+        {
+            var items = _mongoCollection.Find(filterDefinition).ToList();
+
+            return items == null ? new HashSet<I>() : items.ToHashSet();
         }
 
         public MongoClient GetClient()
