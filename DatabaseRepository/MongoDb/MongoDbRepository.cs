@@ -8,9 +8,10 @@ namespace DatabaseRespository.MongoDb
         private IMongoDatabase _database;
         private IMongoCollection<I> _mongoCollection;
 
-        public MongoDbRepository(string connectionString, string databaseName)
+        public MongoDbRepository(string connectionString, string databaseName, string tableName)
         {
             CreateClient(connectionString, databaseName);
+            CreateTableAndIndexes(tableName);
         }
 
         public void Add(HashSet<I> items)
