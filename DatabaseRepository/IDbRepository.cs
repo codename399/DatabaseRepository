@@ -1,5 +1,4 @@
-﻿using MathNet.Numerics.RootFinding;
-using MongoDB.Driver;
+﻿using MongoDB.Driver;
 
 namespace DatabaseRespository
 {

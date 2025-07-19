@@ -1,20 +1,24 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\gauda\\source\\repos\\DatabaseRepository\\DatabaseRepository\\DatabaseRepository.csproj": {}
+    "D:\\Repositories\\DatabaseRepository\\DatabaseRepository\\DatabaseRepository.csproj": {}
   },
   "projects": {
-    "C:\\Users\\gauda\\source\\repos\\DatabaseRepository\\DatabaseRepository\\DatabaseRepository.csproj": {
+    "D:\\Repositories\\DatabaseRepository\\DatabaseRepository\\DatabaseRepository.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\gauda\\source\\repos\\DatabaseRepository\\DatabaseRepository\\DatabaseRepository.csproj",
+        "projectUniqueName": "D:\\Repositories\\DatabaseRepository\\DatabaseRepository\\DatabaseRepository.csproj",
         "projectName": "DatabaseRepository",
-        "projectPath": "C:\\Users\\gauda\\source\\repos\\DatabaseRepository\\DatabaseRepository\\DatabaseRepository.csproj",
+        "projectPath": "D:\\Repositories\\DatabaseRepository\\DatabaseRepository\\DatabaseRepository.csproj",
         "packagesPath": "C:\\Users\\gauda\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\gauda\\source\\repos\\DatabaseRepository\\DatabaseRepository\\obj\\",
+        "outputPath": "D:\\Repositories\\DatabaseRepository\\DatabaseRepository\\obj\\",
         "projectStyle": "PackageReference",
+        "fallbackFolders": [
+          "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
+        ],
         "configFilePaths": [
           "C:\\Users\\gauda\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
@@ -40,7 +44,8 @@
           "enableAudit": "true",
           "auditLevel": "low",
           "auditMode": "direct"
-        }
+        },
+        "SdkAnalysisLevel": "9.0.200"
       },
       "frameworks": {
         "net8.0": {
@@ -48,11 +53,15 @@
           "dependencies": {
             "MongoDB.Driver": {
               "target": "Package",
-              "version": "[3.1.0, )"
+              "version": "[3.2.1, )"
             },
-            "NPOI": {
+            "Swashbuckle.AspNetCore": {
               "target": "Package",
-              "version": "[2.7.2, )"
+              "version": "[6.4.0, )"
+            },
+            "System.Configuration.ConfigurationManager": {
+              "target": "Package",
+              "version": "[9.0.1, )"
             }
           },
           "imports": [
@@ -71,7 +80,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.400/PortableRuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\9.0.200/PortableRuntimeIdentifierGraph.json"
         }
       }
     }
