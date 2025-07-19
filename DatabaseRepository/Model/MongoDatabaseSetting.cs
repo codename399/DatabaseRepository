@@ -1,6 +1,6 @@
-﻿using ChawlEventAPI.Model.Dto;
+﻿using DatabaseRespository.Model.Dto;
 
-namespace ChawlEvent.Model
+namespace DatabaseRespository.Model
 {
     public class MongoDatabaseSetting
     {

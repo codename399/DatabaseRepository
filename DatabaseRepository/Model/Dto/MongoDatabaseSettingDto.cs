@@ -1,9 +1,8 @@
-﻿using ChawlEvent.Model;
-using ChawlEventAPI.Model.Enum;
+﻿using DatabaseRespository.Model.Enum;
 
-namespace ChawlEventAPI.Model.Dto
+namespace DatabaseRespository.Model.Dto
 {
-    public class MongoDatabaseSettingDto:MongoDatabaseSetting
+    public class MongoDatabaseSettingDto : MongoDatabaseSetting
     {
         public string? ConnectionString
         {

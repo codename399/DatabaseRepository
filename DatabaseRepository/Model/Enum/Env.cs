@@ -1,6 +1,6 @@
 ﻿using System.Runtime.Serialization;
 
-namespace ChawlEventAPI.Model.Enum
+namespace DatabaseRespository.Model.Enum
 {
     public enum Env
     {
