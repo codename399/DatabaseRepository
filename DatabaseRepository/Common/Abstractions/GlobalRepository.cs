@@ -13,7 +13,7 @@ namespace DatabaseRespository.Repositories.Abstractions
         public GlobalRepository(IOptions<MongoDatabaseSetting> databaseSetting, string tableName)
         {
             _databaseSetting = MongoDatabaseSetting.ToDto(databaseSetting.Value);
-            _mongoDbRepository = new MongoDbRepository<T>(_databaseSetting.ConnectionString, databaseSetting.Value.DatabaseName, tableName);
+            _mongoDbRepository = new MongoDbRepository<T>(_databaseSetting.ConnectionString ?? string.Empty, databaseSetting.Value.DatabaseName ?? string.Empty, tableName);
         }
     }
 }
