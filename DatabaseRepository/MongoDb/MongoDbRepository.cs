@@ -48,7 +48,7 @@ namespace DatabaseRespository.MongoDb
 
         public void Delete(HashSet<string> ids)
         {
-            FilterDefinition<I> filterDefinition = Builders<I>.Filter.In("id", ids);
+            FilterDefinition<I> filterDefinition = Builders<I>.Filter.In("_id", ids);
 
             _mongoCollection.DeleteMany(filterDefinition);
         }
@@ -72,7 +72,7 @@ namespace DatabaseRespository.MongoDb
 
         public HashSet<I> GetById(HashSet<string> ids)
         {
-            FilterDefinition<I> filterDefinition = Builders<I>.Filter.In("Id", ids);
+            FilterDefinition<I> filterDefinition = Builders<I>.Filter.In("_id", ids);
 
             return Get(filterDefinition);
         }
