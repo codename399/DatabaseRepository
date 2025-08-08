@@ -1,4 +1,5 @@
-﻿using DatabaseRepository.Helper;
+﻿using DatabaseRepository.Constants;
+using DatabaseRepository.Helper;
 using DatabaseRepository.Model;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.Extensions.DependencyInjection;
@@ -10,9 +11,9 @@ namespace GameStash.Extensions
 {
     public static class AuthenticationServiceExtension
     {
-        public static void AddJwtAuthentication(this IServiceCollection services, string configSectionName = "AuthenticationConfig")
+        public static void AddJwtAuthentication(this IServiceCollection services, string configSectionName = Constant.AuthenticationConfig)
         {
-            AuthenticationConfig authenticationConfig = JsonSerializer.Deserialize<AuthenticationConfig>(AppSettingsHelper.GetConfiguration(configSectionName)) ?? new AuthenticationConfig();
+            AuthenticationConfig authenticationConfig = AppSettingsHelper.GetConfiguration<AuthenticationConfig>(configSectionName) ?? new AuthenticationConfig();
 
             services.AddAuthentication((options) =>
             {

@@ -1,4 +1,5 @@
-﻿using DatabaseRepository.Helper;
+﻿using DatabaseRepository.Constants;
+using DatabaseRepository.Helper;
 using DatabaseRepository.Model;
 using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
@@ -10,9 +11,9 @@ namespace DatabaseRepository.Common.Utilities
 {
     public static class Util
     {
-        public static string GenerateJwtToken(HashSet<Claim> claims, string configSectionName = "AuthenticationConfig")
+        public static string GenerateJwtToken(HashSet<Claim> claims, string configSectionName = Constant.AuthenticationConfig)
         {
-            AuthenticationConfig authenticationConfig = JsonSerializer.Deserialize<AuthenticationConfig>(AppSettingsHelper.GetConfiguration(configSectionName)) ?? new AuthenticationConfig();
+            AuthenticationConfig authenticationConfig = AppSettingsHelper.GetConfiguration<AuthenticationConfig>(configSectionName) ?? new AuthenticationConfig();
 
             var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(authenticationConfig.SecretKey ?? string.Empty));
 

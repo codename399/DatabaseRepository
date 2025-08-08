@@ -11,14 +11,14 @@ namespace DatabaseRepository.Helper
             _configuration = configuration;
         }
 
-        public static string GetConfiguration(string sectionName)
+        public static T GetConfiguration<T>(string sectionName)
         {
             if (_configuration == null)
             {
                 throw new InvalidOperationException("Configuration has not been initialized. Call Initialize() first.");
             }
 
-            return _configuration[sectionName] ?? throw new ArgumentNullException($"Configuration '{sectionName}' not found.");
+            return (T)_configuration.GetSection(sectionName) ?? throw new ArgumentNullException($"Configuration '{sectionName}' not found.");
         }
     }
 }
