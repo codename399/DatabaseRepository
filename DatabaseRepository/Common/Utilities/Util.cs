@@ -2,11 +2,9 @@
 using DatabaseRepository.Helper;
 using DatabaseRepository.Model;
 using Microsoft.IdentityModel.Tokens;
-using MongoDB.Bson;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
-using System.Text.Json;
 
 namespace DatabaseRepository.Common.Utilities
 {
