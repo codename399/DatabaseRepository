@@ -26,7 +26,7 @@ namespace DatabaseRepository.Extensions
                         Scheme = "Bearer",
                         BearerFormat = "JWT",
                         In = ParameterLocation.Header,
-                        Description = "Enter 'Bearer' [space] and then your valid JWT token.\n\nExample: `Bearer abc123`"
+                        Description = "Enter your valid JWT token.\n\nExample: `abc123`"
                     });
 
                     option.AddSecurityRequirement(new OpenApiSecurityRequirement
