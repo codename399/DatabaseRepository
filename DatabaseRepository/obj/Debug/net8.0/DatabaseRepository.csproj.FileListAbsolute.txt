@@ -11,6 +11,9 @@ C:\Users\gauda\source\repos\DatabaseRepository\DatabaseRepository\obj\Debug\net8
 C:\Users\gauda\source\repos\DatabaseRepository\DatabaseRepository\obj\Debug\net8.0\refint\DatabaseRepository.dll
 C:\Users\gauda\source\repos\DatabaseRepository\DatabaseRepository\obj\Debug\net8.0\DatabaseRepository.pdb
 C:\Users\gauda\source\repos\DatabaseRepository\DatabaseRepository\obj\Debug\net8.0\ref\DatabaseRepository.dll
+D:\Repositories\DatabaseRepository\DatabaseRepository\bin\Debug\net8.0\DatabaseRepository.deps.json
+D:\Repositories\DatabaseRepository\DatabaseRepository\bin\Debug\net8.0\DatabaseRepository.dll
+D:\Repositories\DatabaseRepository\DatabaseRepository\bin\Debug\net8.0\DatabaseRepository.pdb
 D:\Repositories\DatabaseRepository\DatabaseRepository\obj\Debug\net8.0\DatabaseRepository.csproj.AssemblyReference.cache
 D:\Repositories\DatabaseRepository\DatabaseRepository\obj\Debug\net8.0\DatabaseRepository.GeneratedMSBuildEditorConfig.editorconfig
 D:\Repositories\DatabaseRepository\DatabaseRepository\obj\Debug\net8.0\DatabaseRepository.AssemblyInfoInputs.cache
@@ -20,7 +23,4 @@ D:\Repositories\DatabaseRepository\DatabaseRepository\obj\Debug\net8.0\DatabaseR
 D:\Repositories\DatabaseRepository\DatabaseRepository\obj\Debug\net8.0\DatabaseRepository.dll
 D:\Repositories\DatabaseRepository\DatabaseRepository\obj\Debug\net8.0\refint\DatabaseRepository.dll
 D:\Repositories\DatabaseRepository\DatabaseRepository\obj\Debug\net8.0\DatabaseRepository.pdb
-D:\Repositories\DatabaseRepository\DatabaseRepository\bin\Debug\net8.0\DatabaseRepository.deps.json
-D:\Repositories\DatabaseRepository\DatabaseRepository\bin\Debug\net8.0\DatabaseRepository.dll
-D:\Repositories\DatabaseRepository\DatabaseRepository\bin\Debug\net8.0\DatabaseRepository.pdb
 D:\Repositories\DatabaseRepository\DatabaseRepository\obj\Debug\net8.0\ref\DatabaseRepository.dll
