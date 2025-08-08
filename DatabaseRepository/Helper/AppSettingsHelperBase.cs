@@ -2,7 +2,7 @@
 
 namespace DatabaseRepository.Helper
 {
-    public static class AppSettingsHelper
+    public class AppSettingsHelperBase
     {
         private static IConfiguration _configuration;
 
