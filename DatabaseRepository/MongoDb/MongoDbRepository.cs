@@ -1,4 +1,5 @@
-﻿using MongoDB.Driver;
+﻿using DatabaseRepository.Constants;
+using MongoDB.Driver;
 
 namespace DatabaseRespository.MongoDb
 {
@@ -48,7 +49,7 @@ namespace DatabaseRespository.MongoDb
 
         public void Delete(HashSet<string> ids)
         {
-            FilterDefinition<I> filterDefinition = Builders<I>.Filter.In("_id", ids);
+            FilterDefinition<I> filterDefinition = Builders<I>.Filter.In(BaseConstant._id, ids);
 
             _mongoCollection.DeleteMany(filterDefinition);
         }
@@ -60,14 +61,14 @@ namespace DatabaseRespository.MongoDb
 
         public HashSet<I> GetAll(bool isDeleted = false)
         {
-            FilterDefinition<I> filterDefinition = Builders<I>.Filter.Eq("IsDeleted", isDeleted);
+            FilterDefinition<I> filterDefinition = Builders<I>.Filter.Eq(BaseConstant.IsDeleted, isDeleted);
 
             return Get(filterDefinition);
         }
 
         public HashSet<I> GetByField(FilterDefinition<I> filterDefinition, bool isDeleted = false)
         {
-            filterDefinition = filterDefinition & Builders<I>.Filter.Eq("IsDeleted", isDeleted);
+            filterDefinition = filterDefinition & Builders<I>.Filter.Eq(BaseConstant.IsDeleted, isDeleted);
 
             return Get(filterDefinition);
         }
@@ -76,8 +77,8 @@ namespace DatabaseRespository.MongoDb
         {
             var builders = Builders<I>.Filter;
 
-            FilterDefinition<I> filterDefinition = builders.In("_id", ids)
-                & builders.Eq("IsDeleted", isDeleted);
+            FilterDefinition<I> filterDefinition = builders.In(BaseConstant._id, ids)
+                & builders.Eq(BaseConstant.IsDeleted, isDeleted);
 
 
             return Get(filterDefinition);
@@ -97,9 +98,9 @@ namespace DatabaseRespository.MongoDb
 
         public void Delete(HashSet<string> ids, bool isDeleted)
         {
-            FilterDefinition<I> filter = Builders<I>.Filter.In("_id", ids);
+            FilterDefinition<I> filter = Builders<I>.Filter.In(BaseConstant._id, ids);
 
-            UpdateDefinition<I> update = Builders<I>.Update.Set("IsDeleted", isDeleted);
+            UpdateDefinition<I> update = Builders<I>.Update.Set(BaseConstant.IsDeleted, isDeleted);
 
             _mongoCollection.UpdateMany(filter, update);
         }
