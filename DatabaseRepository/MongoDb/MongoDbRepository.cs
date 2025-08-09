@@ -58,21 +58,27 @@ namespace DatabaseRespository.MongoDb
             _mongoCollection.DeleteMany(filterDefinition);
         }
 
-        public HashSet<I> GetAll()
+        public HashSet<I> GetAll(bool isDeleted = false)
         {
-            FilterDefinition<I> filterDefinition = Builders<I>.Filter.Empty;
+            FilterDefinition<I> filterDefinition = Builders<I>.Filter.Eq("IsDeleted", isDeleted);
 
             return Get(filterDefinition);
         }
 
-        public HashSet<I> GetByField(FilterDefinition<I> filterDefinition)
+        public HashSet<I> GetByField(FilterDefinition<I> filterDefinition, bool isDeleted = false)
         {
+            filterDefinition = filterDefinition & Builders<I>.Filter.Eq("IsDeleted", isDeleted);
+
             return Get(filterDefinition);
         }
 
-        public HashSet<I> GetById(HashSet<string> ids)
+        public HashSet<I> GetById(HashSet<string> ids, bool isDeleted = false)
         {
-            FilterDefinition<I> filterDefinition = Builders<I>.Filter.In("_id", ids);
+            var builders = Builders<I>.Filter;
+
+            FilterDefinition<I> filterDefinition = builders.In("_id", ids)
+                & builders.Eq("IsDeleted", isDeleted);
+
 
             return Get(filterDefinition);
         }
@@ -87,6 +93,15 @@ namespace DatabaseRespository.MongoDb
         public MongoClient GetClient()
         {
             return _mongoClient;
+        }
+
+        public void Delete(HashSet<string> ids, bool isDeleted)
+        {
+            FilterDefinition<I> filter = Builders<I>.Filter.In("_id", ids);
+
+            UpdateDefinition<I> update = Builders<I>.Update.Set("IsDeleted", isDeleted);
+
+            _mongoCollection.UpdateMany(filter, update);
         }
     }
 }

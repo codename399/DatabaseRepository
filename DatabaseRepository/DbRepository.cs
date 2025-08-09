@@ -30,17 +30,22 @@ namespace DatabaseRespository
             throw new NotImplementedException();
         }
 
-        public HashSet<I> GetAll()
+        public void Delete(HashSet<string> ids, bool isDeleted)
         {
             throw new NotImplementedException();
         }
 
-        public HashSet<I> GetByField(FilterDefinition<I> filterDefinition)
+        public HashSet<I> GetAll(bool isDeleted = false)
         {
             throw new NotImplementedException();
         }
 
-        public HashSet<I> GetById(HashSet<string> ids)
+        public HashSet<I> GetByField(FilterDefinition<I> filterDefinition, bool isDeleted = false)
+        {
+            throw new NotImplementedException();
+        }
+
+        public HashSet<I> GetById(HashSet<string> ids, bool isDeleted = false)
         {
             throw new NotImplementedException();
         }

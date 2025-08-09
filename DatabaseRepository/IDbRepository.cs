@@ -11,8 +11,9 @@ namespace DatabaseRespository
         public void Update(FilterDefinition<I> filterDefinition, UpdateDefinition<I> updateDefinition, bool upsert);
         public void Delete(HashSet<string> ids);
         public void Delete(FilterDefinition<I> filterDefinition);
-        public HashSet<I> GetAll();
-        public HashSet<I> GetById(HashSet<string> ids);
-        public HashSet<I> GetByField(FilterDefinition<I> filterDefinition);
+        public void Delete(HashSet<string> ids, bool isDeleted);
+        public HashSet<I> GetAll(bool isDeleted = false);
+        public HashSet<I> GetById(HashSet<string> ids, bool isDeleted = false);
+        public HashSet<I> GetByField(FilterDefinition<I> filterDefinition, bool isDeleted = false);
     }
 }
