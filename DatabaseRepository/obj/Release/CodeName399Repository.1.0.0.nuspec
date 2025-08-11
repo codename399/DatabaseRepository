@@ -1,0 +1,23 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2012/06/nuspec.xsd">
+  <metadata>
+    <id>CodeName399Repository</id>
+    <version>1.0.0</version>
+    <authors>AjayGaud</authors>
+    <description>Common package for all database functions</description>
+    <repository type="git" commit="0ee8a4f0621702ab8c6965d5a0a569eb2107c0c9" />
+    <dependencies>
+      <group targetFramework="net8.0">
+        <dependency id="AutoMapper" version="15.0.1" exclude="Build,Analyzers" />
+        <dependency id="AutoMapper.Extensions.Microsoft.DependencyInjection" version="12.0.1" exclude="Build,Analyzers" />
+        <dependency id="Microsoft.AspNetCore.Authentication.JwtBearer" version="8.0.19" exclude="Build,Analyzers" />
+        <dependency id="MongoDB.Driver" version="3.4.2" exclude="Build,Analyzers" />
+        <dependency id="Swashbuckle.AspNetCore" version="9.0.3" exclude="Build,Analyzers" />
+        <dependency id="System.Configuration.ConfigurationManager" version="9.0.8" exclude="Build,Analyzers" />
+      </group>
+    </dependencies>
+  </metadata>
+  <files>
+    <file src="D:\Repositories\DatabaseRepository\DatabaseRepository\bin\Release\net8.0\DatabaseRepository.dll" target="lib\net8.0\DatabaseRepository.dll" />
+  </files>
+</package>
