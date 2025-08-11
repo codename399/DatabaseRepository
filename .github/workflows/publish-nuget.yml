@@ -1,8 +1,9 @@
 name: Publish NuGet Package
 
 on:
-  release:
-    types: [published] # Runs when you create a GitHub release
+  push:
+    branches:
+      - main
 
 jobs:
   publish:
