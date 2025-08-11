@@ -28,4 +28,4 @@ jobs:
         run: dotnet pack --configuration Release -o .\DatabaseRepository\bin\Release
 
       - name: Publish to NuGet
-        run: dotnet nuget push ".\DatabaseRepository\bin\Release\*.nupkg" --api-key ${{ secrets.CODENAME399KEY }} --source https://api.nuget.org/v3/index.json
+        run: dotnet nuget push ".\DatabaseRepository\bin\Release\*.nupkg" --api-key ${{ secrets.CODENAME399KEY }} --source https://api.nuget.org/v3/index.json --skip-duplicate
