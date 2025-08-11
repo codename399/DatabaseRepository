@@ -29,5 +29,10 @@ namespace DatabaseRepository.Common.Utilities
 
             return jwtToken;
         }
+
+        public static bool IsValidGuid(string id)
+        {
+            return Guid.TryParse(id, out Guid guid) && guid != Guid.Empty;
+        }
     }
 }
