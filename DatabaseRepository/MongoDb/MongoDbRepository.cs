@@ -15,19 +15,19 @@ namespace DatabaseRespository.MongoDb
             CreateTableAndIndexes(tableName);
         }
 
-        public void Add(HashSet<I> items)
+        public async Task Add(HashSet<I> items)
         {
             if (items is { Count: <= 0 })
             {
                 return;
             }
 
-            _mongoCollection.InsertMany(items);
+            await _mongoCollection.InsertManyAsync(items);
         }
 
-        public void Update(FilterDefinition<I> filterDefinition, UpdateDefinition<I> updateDefinition, bool upsert)
+        public async Task Update(FilterDefinition<I> filterDefinition, UpdateDefinition<I> updateDefinition, bool upsert)
         {
-            _mongoCollection.UpdateMany(filterDefinition, updateDefinition, new UpdateOptions { IsUpsert = upsert });
+            await _mongoCollection.UpdateManyAsync(filterDefinition, updateDefinition, new UpdateOptions { IsUpsert = upsert });
         }
 
         public void CreateClient(string connectionString, string databaseName)
@@ -47,33 +47,33 @@ namespace DatabaseRespository.MongoDb
             }
         }
 
-        public void Delete(HashSet<string> ids)
+        public async Task Delete(HashSet<string> ids)
         {
             FilterDefinition<I> filterDefinition = Builders<I>.Filter.In(BaseConstant._id, ids);
 
-            _mongoCollection.DeleteMany(filterDefinition);
+            await _mongoCollection.DeleteManyAsync(filterDefinition);
         }
 
-        public void Delete(FilterDefinition<I> filterDefinition)
+        public async Task Delete(FilterDefinition<I> filterDefinition)
         {
-            _mongoCollection.DeleteMany(filterDefinition);
+            await _mongoCollection.DeleteManyAsync(filterDefinition);
         }
 
-        public HashSet<I> GetAll(bool isDeleted = false)
+        public Task<(HashSet<I>, long)> GetAll(bool isDeleted = false, int? skip = 0, int? limit = 0, string? sortBy = BaseConstant.CreationDateTime, bool ascending = false)
         {
             FilterDefinition<I> filterDefinition = Builders<I>.Filter.Eq(BaseConstant.IsDeleted, isDeleted);
 
-            return Get(filterDefinition);
+            return Get(filterDefinition, skip, limit, sortBy, ascending);
         }
 
-        public HashSet<I> GetByField(FilterDefinition<I> filterDefinition, bool isDeleted = false)
+        public Task<(HashSet<I>, long)> GetByField(FilterDefinition<I> filterDefinition, bool isDeleted = false, int? skip = 0, int? limit = 0, string? sortBy = BaseConstant.CreationDateTime, bool ascending = false)
         {
             filterDefinition = filterDefinition & Builders<I>.Filter.Eq(BaseConstant.IsDeleted, isDeleted);
 
-            return Get(filterDefinition);
+            return Get(filterDefinition, skip, limit, sortBy, ascending);
         }
 
-        public HashSet<I> GetById(HashSet<string> ids, bool isDeleted = false)
+        public Task<(HashSet<I>, long)> GetById(HashSet<string> ids, bool isDeleted = false, int? skip = 0, int? limit = 0, string? sortBy = BaseConstant.CreationDateTime, bool ascending = false)
         {
             var builders = Builders<I>.Filter;
 
@@ -81,14 +81,31 @@ namespace DatabaseRespository.MongoDb
                 & builders.Eq(BaseConstant.IsDeleted, isDeleted);
 
 
-            return Get(filterDefinition);
+            return Get(filterDefinition, skip, limit, sortBy, ascending);
         }
 
-        private HashSet<I> Get(FilterDefinition<I> filterDefinition)
+        private async Task<(HashSet<I>, long)> Get(FilterDefinition<I> filterDefinition, int? skip = 0, int? limit = 0, string? sortBy = BaseConstant.CreationDateTime, bool ascending = false)
         {
-            var items = _mongoCollection.Find(filterDefinition).ToList();
+            SortDefinition<I> sort = ascending ?
+                Builders<I>.Sort.Ascending(sortBy) :
+                Builders<I>.Sort.Descending(sortBy);
 
-            return items == null ? new HashSet<I>() : items.ToHashSet();
+            var count = await _mongoCollection.CountDocumentsAsync(filterDefinition);
+            var query = _mongoCollection.Find(filterDefinition).Sort(sort);
+
+            if (skip.HasValue && skip.Value > 0)
+            {
+                query = query.Skip(skip.Value);
+            }
+
+            if (limit.HasValue && limit.Value > 0)
+            {
+                query = query.Limit(limit.Value);
+            }
+
+            var items = await query.ToListAsync();
+
+            return (items == null ? new HashSet<I>() : items.ToHashSet(), count);
         }
 
         public MongoClient GetClient()
@@ -96,13 +113,13 @@ namespace DatabaseRespository.MongoDb
             return _mongoClient;
         }
 
-        public void Delete(HashSet<string> ids, bool isDeleted)
+        public async Task Deactivate(HashSet<string> ids, bool isDeleted)
         {
             FilterDefinition<I> filter = Builders<I>.Filter.In(BaseConstant._id, ids);
 
             UpdateDefinition<I> update = Builders<I>.Update.Set(BaseConstant.IsDeleted, isDeleted);
 
-            _mongoCollection.UpdateMany(filter, update);
+            await _mongoCollection.UpdateManyAsync(filter, update);
         }
     }
 }
