@@ -1,4 +1,4 @@
-﻿using DatabaseRepository.Constants;
+﻿using DatabaseRepository.Model;
 using MongoDB.Driver;
 
 namespace DatabaseRespository
@@ -13,8 +13,8 @@ namespace DatabaseRespository
         public Task Delete(HashSet<string> ids);
         public Task Delete(FilterDefinition<I> filterDefinition);
         public Task Deactivate(HashSet<string> ids, bool isDeleted);
-        public Task<(HashSet<I>, long)> GetAll(bool isDeleted = false, int? skip = 0, int? limit = 0, string? sortBy = BaseConstant.CreationDateTime, bool ascending = false);
-        public Task<(HashSet<I>, long)> GetById(HashSet<string> ids, bool isDeleted = false, int? skip = 0, int? limit = 0, string? sortBy = BaseConstant.CreationDateTime, bool ascending = false);
-        public Task<(HashSet<I>, long)> GetByField(FilterDefinition<I> filterDefinition, bool isDeleted = false, int? skip = 0, int? limit = 0, string? sortBy = BaseConstant.CreationDateTime, bool ascending = false);
+        public Task<(HashSet<I>, long)> GetAll(Request request);
+        public Task<(HashSet<I>, long)> GetById(HashSet<string> ids, Request request);
+        public Task<(HashSet<I>, long)> GetByField(FilterDefinition<I> filterDefinition, Request request);
     }
 }

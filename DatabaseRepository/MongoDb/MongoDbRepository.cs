@@ -1,4 +1,5 @@
 ﻿using DatabaseRepository.Constants;
+using DatabaseRepository.Model;
 using MongoDB.Driver;
 
 namespace DatabaseRespository.MongoDb
@@ -59,48 +60,48 @@ namespace DatabaseRespository.MongoDb
             await _mongoCollection.DeleteManyAsync(filterDefinition);
         }
 
-        public Task<(HashSet<I>, long)> GetAll(bool isDeleted = false, int? skip = 0, int? limit = 0, string? sortBy = BaseConstant.CreationDateTime, bool ascending = false)
+        public Task<(HashSet<I>, long)> GetAll(Request request)
         {
-            FilterDefinition<I> filterDefinition = Builders<I>.Filter.Eq(BaseConstant.IsDeleted, isDeleted);
+            FilterDefinition<I> filterDefinition = Builders<I>.Filter.Eq(BaseConstant.IsDeleted, request.IsDeleted);
 
-            return Get(filterDefinition, skip, limit, sortBy, ascending);
+            return Get(filterDefinition, request);
         }
 
-        public Task<(HashSet<I>, long)> GetByField(FilterDefinition<I> filterDefinition, bool isDeleted = false, int? skip = 0, int? limit = 0, string? sortBy = BaseConstant.CreationDateTime, bool ascending = false)
+        public Task<(HashSet<I>, long)> GetByField(FilterDefinition<I> filterDefinition, Request request)
         {
-            filterDefinition = filterDefinition & Builders<I>.Filter.Eq(BaseConstant.IsDeleted, isDeleted);
+            filterDefinition = filterDefinition & Builders<I>.Filter.Eq(BaseConstant.IsDeleted, request.IsDeleted);
 
-            return Get(filterDefinition, skip, limit, sortBy, ascending);
+            return Get(filterDefinition, request);
         }
 
-        public Task<(HashSet<I>, long)> GetById(HashSet<string> ids, bool isDeleted = false, int? skip = 0, int? limit = 0, string? sortBy = BaseConstant.CreationDateTime, bool ascending = false)
+        public Task<(HashSet<I>, long)> GetById(HashSet<string> ids, Request request)
         {
             var builders = Builders<I>.Filter;
 
             FilterDefinition<I> filterDefinition = builders.In(BaseConstant._id, ids)
-                & builders.Eq(BaseConstant.IsDeleted, isDeleted);
+                & builders.Eq(BaseConstant.IsDeleted, request.IsDeleted);
 
 
-            return Get(filterDefinition, skip, limit, sortBy, ascending);
+            return Get(filterDefinition, request);
         }
 
-        private async Task<(HashSet<I>, long)> Get(FilterDefinition<I> filterDefinition, int? skip = 0, int? limit = 0, string? sortBy = BaseConstant.CreationDateTime, bool ascending = false)
+        private async Task<(HashSet<I>, long)> Get(FilterDefinition<I> filterDefinition, Request request)
         {
-            SortDefinition<I> sort = ascending ?
-                Builders<I>.Sort.Ascending(sortBy) :
-                Builders<I>.Sort.Descending(sortBy);
+            SortDefinition<I> sort = request.Ascending ?
+                Builders<I>.Sort.Ascending(request.SortBy) :
+                Builders<I>.Sort.Descending(request.SortBy);
 
             var count = await _mongoCollection.CountDocumentsAsync(filterDefinition);
             var query = _mongoCollection.Find(filterDefinition).Sort(sort);
 
-            if (skip.HasValue && skip.Value > 0)
+            if (request.Skip.HasValue && request.Skip.Value > 0)
             {
-                query = query.Skip(skip.Value);
+                query = query.Skip(request.Skip.Value);
             }
 
-            if (limit.HasValue && limit.Value > 0)
+            if (request.Limit.HasValue && request.Limit.Value > 0)
             {
-                query = query.Limit(limit.Value);
+                query = query.Limit(request.Limit.Value);
             }
 
             var items = await query.ToListAsync();

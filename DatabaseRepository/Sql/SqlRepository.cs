@@ -1,4 +1,4 @@
-﻿using DatabaseRepository.Constants;
+﻿using DatabaseRepository.Model;
 using MongoDB.Driver;
 
 namespace DatabaseRespository.Sql
@@ -35,17 +35,17 @@ namespace DatabaseRespository.Sql
             throw new NotImplementedException();
         }
 
-        public Task<(HashSet<I>, long)> GetAll(bool isDeleted = false, int? skip = 0, int? limit = 0, string? sortBy = BaseConstant.CreationDateTime, bool ascending = false)
+        public Task<(HashSet<I>, long)> GetAll(Request request)
         {
             throw new NotImplementedException();
         }
 
-        public Task<(HashSet<I>, long)> GetByField(FilterDefinition<I> filterDefinition, bool isDeleted = false, int? skip = 0, int? limit = 0, string? sortBy = BaseConstant.CreationDateTime, bool ascending = false)
+        public Task<(HashSet<I>, long)> GetByField(FilterDefinition<I> filterDefinition, Request request)
         {
             throw new NotImplementedException();
         }
 
-        public Task<(HashSet<I>, long)> GetById(HashSet<string> ids, bool isDeleted = false, int? skip = 0, int? limit = 0, string? sortBy = BaseConstant.CreationDateTime, bool ascending = false)
+        public Task<(HashSet<I>, long)> GetById(HashSet<string> ids, Request request)
         {
             throw new NotImplementedException();
         }
