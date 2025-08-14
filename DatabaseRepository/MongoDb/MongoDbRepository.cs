@@ -67,14 +67,14 @@ namespace DatabaseRespository.MongoDb
             return Get(filterDefinition, request);
         }
 
-        public Task<(HashSet<I>, long)> GetByField(FilterDefinition<I> filterDefinition, Request request)
+        public async Task<(HashSet<I>, long)> GetByField(FilterDefinition<I> filterDefinition, Request request)
         {
             filterDefinition = filterDefinition & Builders<I>.Filter.Eq(BaseConstant.IsDeleted, request.IsDeleted);
 
-            return Get(filterDefinition, request);
+            return await Get(filterDefinition, request);
         }
 
-        public Task<(HashSet<I>, long)> GetById(HashSet<string> ids, Request request)
+        public async Task<(HashSet<I>, long)> GetById(HashSet<string> ids, Request request)
         {
             var builders = Builders<I>.Filter;
 
@@ -82,7 +82,7 @@ namespace DatabaseRespository.MongoDb
                 & builders.Eq(BaseConstant.IsDeleted, request.IsDeleted);
 
 
-            return Get(filterDefinition, request);
+            return await Get(filterDefinition, request);
         }
 
         private async Task<(HashSet<I>, long)> Get(FilterDefinition<I> filterDefinition, Request request)

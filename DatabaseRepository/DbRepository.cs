@@ -5,7 +5,7 @@ namespace DatabaseRespository
 {
     public class DbRepository<T, I> : IDbRepository<T, I>
     {
-        public Task Add(HashSet<I> items)
+        public async Task Add(HashSet<I> items)
         {
             throw new NotImplementedException();
         }
@@ -20,32 +20,32 @@ namespace DatabaseRespository
             throw new NotImplementedException();
         }
 
-        public Task Delete(HashSet<string> ids)
+        public async Task Delete(HashSet<string> ids)
         {
             throw new NotImplementedException();
         }
 
-        public Task Delete(FilterDefinition<I> filterDefinition)
+        public async Task Delete(FilterDefinition<I> filterDefinition)
         {
             throw new NotImplementedException();
         }
 
-        public Task Deactivate(HashSet<string> ids, bool isDeleted)
+        public async Task Deactivate(HashSet<string> ids, bool isDeleted)
         {
             throw new NotImplementedException();
         }
 
-        public Task<(HashSet<I>, long)> GetAll(Request request)
+        public async Task<(HashSet<I>, long)> GetAll(Request request)
         {
             throw new NotImplementedException();
         }
 
-        public Task<(HashSet<I>, long)> GetByField(FilterDefinition<I> filterDefinition, Request request)
+        public async Task<(HashSet<I>, long)> GetByField(FilterDefinition<I> filterDefinition, Request request)
         {
             throw new NotImplementedException();
         }
 
-        public Task<(HashSet<I>, long)> GetById(HashSet<string> ids, Request request)
+        public async Task<(HashSet<I>, long)> GetById(HashSet<string> ids, Request request)
         {
             throw new NotImplementedException();
         }
@@ -55,7 +55,7 @@ namespace DatabaseRespository
             throw new NotImplementedException();
         }
 
-        public Task Update(FilterDefinition<I> filterDefinition, UpdateDefinition<I> updateDefinition, bool upsert)
+        public async Task Update(FilterDefinition<I> filterDefinition, UpdateDefinition<I> updateDefinition, bool upsert)
         {
             throw new NotImplementedException();
         }
