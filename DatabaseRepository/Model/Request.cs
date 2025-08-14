@@ -8,13 +8,12 @@ namespace DatabaseRepository.Model
         public int? Limit { get; set; }
         public string? SortBy { get; set; }
         public bool Ascending { get; set; }
-
         public bool? IsDeleted { get; set; }
 
         public Request()
         {
             Skip = 0;
-            Limit = 0;
+            Limit = 5;
             SortBy = BaseConstant.CreationDateTime;
             Ascending = false;
             IsDeleted = false;
