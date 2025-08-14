@@ -30,22 +30,22 @@ namespace DatabaseRespository
             throw new NotImplementedException();
         }
 
-        public async Task Deactivate(HashSet<string> ids, bool isDeleted)
+        public async Task Deactivate(HashSet<string> ids, bool isDeleted = false)
         {
             throw new NotImplementedException();
         }
 
-        public async Task<PagedResponse<I>> GetAll(Request request)
+        public async Task<PagedResponse<I>> GetAll(Request? request = null)
         {
             throw new NotImplementedException();
         }
 
-        public async Task<PagedResponse<I>> GetByField(FilterDefinition<I> filterDefinition, Request request)
+        public async Task<PagedResponse<I>> GetByField(FilterDefinition<I> filterDefinition, Request? request = null)
         {
             throw new NotImplementedException();
         }
 
-        public async Task<PagedResponse<I>> GetById(HashSet<string> ids, Request request)
+        public async Task<PagedResponse<I>> GetById(HashSet<string> ids, Request? request = null)
         {
             throw new NotImplementedException();
         }
