@@ -60,21 +60,21 @@ namespace DatabaseRespository.MongoDb
             await _mongoCollection.DeleteManyAsync(filterDefinition);
         }
 
-        public Task<(HashSet<I>, long)> GetAll(Request request)
+        public async Task<PagedResponse<I>> GetAll(Request request)
         {
             FilterDefinition<I> filterDefinition = Builders<I>.Filter.Eq(BaseConstant.IsDeleted, request.IsDeleted);
 
             return Get(filterDefinition, request);
         }
 
-        public async Task<(HashSet<I>, long)> GetByField(FilterDefinition<I> filterDefinition, Request request)
+        public async Task<PagedResponse<I>> GetByField(FilterDefinition<I> filterDefinition, Request request)
         {
             filterDefinition = filterDefinition & Builders<I>.Filter.Eq(BaseConstant.IsDeleted, request.IsDeleted);
 
             return await Get(filterDefinition, request);
         }
 
-        public async Task<(HashSet<I>, long)> GetById(HashSet<string> ids, Request request)
+        public async Task<PagedResponse<I>> GetById(HashSet<string> ids, Request request)
         {
             var builders = Builders<I>.Filter;
 
@@ -85,7 +85,7 @@ namespace DatabaseRespository.MongoDb
             return await Get(filterDefinition, request);
         }
 
-        private async Task<(HashSet<I>, long)> Get(FilterDefinition<I> filterDefinition, Request request)
+        private async Task<PagedResponse<I>> Get(FilterDefinition<I> filterDefinition, Request request)
         {
             SortDefinition<I> sort = request.Ascending ?
                 Builders<I>.Sort.Ascending(request.SortBy) :
@@ -106,7 +106,13 @@ namespace DatabaseRespository.MongoDb
 
             var items = await query.ToListAsync();
 
-            return (items == null ? new HashSet<I>() : items.ToHashSet(), count);
+            PagedResponse<I> pagedResponse = new PagedResponse<I>
+            {
+                Items = items.ToHashSet(),
+                Count = count
+            };
+
+            return pagedResponse;
         }
 
         public MongoClient GetClient()

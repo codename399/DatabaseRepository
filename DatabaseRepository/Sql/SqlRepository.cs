@@ -35,17 +35,17 @@ namespace DatabaseRespository.Sql
             throw new NotImplementedException();
         }
 
-        public async Task<(HashSet<I>, long)> GetAll(Request request)
+        public async Task<PagedResponse<I>> GetAll(Request request)
         {
             throw new NotImplementedException();
         }
 
-        public async Task<(HashSet<I>, long)> GetByField(FilterDefinition<I> filterDefinition, Request request)
+        public async Task<PagedResponse<I>> GetByField(FilterDefinition<I> filterDefinition, Request request)
         {
             throw new NotImplementedException();
         }
 
-        public async Task<(HashSet<I>, long)> GetById(HashSet<string> ids, Request request)
+        public async Task<PagedResponse<I>> GetById(HashSet<string> ids, Request request)
         {
             throw new NotImplementedException();
         }

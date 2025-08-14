@@ -13,8 +13,8 @@ namespace DatabaseRespository
         public Task Delete(HashSet<string> ids);
         public Task Delete(FilterDefinition<I> filterDefinition);
         public Task Deactivate(HashSet<string> ids, bool isDeleted);
-        public Task<(HashSet<I>, long)> GetAll(Request request);
-        public Task<(HashSet<I>, long)> GetById(HashSet<string> ids, Request request);
-        public Task<(HashSet<I>, long)> GetByField(FilterDefinition<I> filterDefinition, Request request);
+        public Task<PagedResponse<I>> GetAll(Request request);
+        public Task<PagedResponse<I>> GetById(HashSet<string> ids, Request request);
+        public Task<PagedResponse<I>> GetByField(FilterDefinition<I> filterDefinition, Request request);
     }
 }
