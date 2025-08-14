@@ -64,7 +64,7 @@ namespace DatabaseRespository.MongoDb
         {
             FilterDefinition<I> filterDefinition = Builders<I>.Filter.Eq(BaseConstant.IsDeleted, request.IsDeleted);
 
-            return Get(filterDefinition, request);
+            return await Get(filterDefinition, request);
         }
 
         public async Task<PagedResponse<I>> GetByField(FilterDefinition<I> filterDefinition, Request request)
