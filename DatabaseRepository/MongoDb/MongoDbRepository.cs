@@ -62,14 +62,14 @@ namespace DatabaseRespository.MongoDb
 
         public async Task<PagedResponse<I>> GetAll(Request? request = null)
         {
-            FilterDefinition<I> filterDefinition = Builders<I>.Filter.Eq(BaseConstant.IsDeleted, request?.IsDeleted);
+            FilterDefinition<I> filterDefinition = Builders<I>.Filter.Empty;
 
             return await Get(filterDefinition, request);
         }
 
         public async Task<PagedResponse<I>> GetByField(FilterDefinition<I> filterDefinition, Request? request = null)
         {
-            filterDefinition = filterDefinition & Builders<I>.Filter.Eq(BaseConstant.IsDeleted, request?.IsDeleted);
+            filterDefinition = filterDefinition & Builders<I>.Filter.Empty;
 
             return await Get(filterDefinition, request);
         }
@@ -78,9 +78,7 @@ namespace DatabaseRespository.MongoDb
         {
             var builders = Builders<I>.Filter;
 
-            FilterDefinition<I> filterDefinition = builders.In(BaseConstant._id, ids)
-                & builders.Eq(BaseConstant.IsDeleted, request?.IsDeleted);
-
+            FilterDefinition<I> filterDefinition = builders.In(BaseConstant._id, ids);
 
             return await Get(filterDefinition, request);
         }
@@ -94,6 +92,10 @@ namespace DatabaseRespository.MongoDb
                 sort = request.Ascending ?
                    Builders<I>.Sort.Ascending(request.SortBy) :
                    Builders<I>.Sort.Descending(request.SortBy);
+            }
+            else
+            {
+                filterDefinition = filterDefinition & Builders<I>.Filter.Eq(BaseConstant.IsDeleted, false);
             }
 
             var count = await _mongoCollection.CountDocumentsAsync(filterDefinition);
