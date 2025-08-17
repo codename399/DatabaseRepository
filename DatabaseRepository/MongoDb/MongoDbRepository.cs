@@ -85,11 +85,9 @@ namespace DatabaseRespository.MongoDb
 
         private async Task<PagedResponse<I>> Get(FilterDefinition<I> filterDefinition, Request? request = null)
         {
-            SortDefinition<I> sort = null;
             long count = await _mongoCollection.CountDocumentsAsync(filterDefinition);
 
-
-            if (request is not null && !request.FetchAll)
+            if (request is not null)
             {
                 if (request.filters != null)
                 {
@@ -114,22 +112,25 @@ namespace DatabaseRespository.MongoDb
 
             var query = _mongoCollection.Find(filterDefinition);
 
-            if (request is not null && !request.FetchAll)
+            if (request is not null)
             {
-                sort = request.Ascending ?
+                SortDefinition<I> sort = request.Ascending ?
                    Builders<I>.Sort.Ascending(request.SortBy) :
                    Builders<I>.Sort.Descending(request.SortBy);
 
                 query = query.Sort(sort);
 
-                if (request.Skip.HasValue && request.Skip.Value > 0)
+                if (!request.FetchAll)
                 {
-                    query = query.Skip(request.Skip.Value);
-                }
+                    if (request.Skip.HasValue && request.Skip.Value > 0)
+                    {
+                        query = query.Skip(request.Skip.Value);
+                    }
 
-                if (request.Limit.HasValue && request.Limit.Value > 0)
-                {
-                    query = query.Limit(request.Limit.Value);
+                    if (request.Limit.HasValue && request.Limit.Value > 0)
+                    {
+                        query = query.Limit(request.Limit.Value);
+                    }
                 }
             }
 
