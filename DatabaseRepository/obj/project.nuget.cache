@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "AOU6MTN0+3k=",
+  "dgSpecHash": "OLmaD7XKjeI=",
   "success": true,
-  "projectFilePath": "D:\\Repositories\\DatabaseRepository\\DatabaseRepository\\DatabaseRepository.csproj",
+  "projectFilePath": "C:\\Users\\gauda\\source\\repos\\codename399\\DatabaseRepository\\DatabaseRepository\\DatabaseRepository.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\gauda\\.nuget\\packages\\automapper\\12.0.1\\automapper.12.0.1.nupkg.sha512",
     "C:\\Users\\gauda\\.nuget\\packages\\automapper.extensions.microsoft.dependencyinjection\\12.0.1\\automapper.extensions.microsoft.dependencyinjection.12.0.1.nupkg.sha512",

@@ -86,28 +86,36 @@ namespace DatabaseRespository.MongoDb
         private async Task<PagedResponse<I>> Get(FilterDefinition<I> filterDefinition, Request? request = null)
         {
             SortDefinition<I> sort = null;
+            long count = await _mongoCollection.CountDocumentsAsync(filterDefinition);
 
-            if (request is not null)
+
+            if (request is not null && !request.FetchAll)
             {
-                sort = request.Ascending ?
-                   Builders<I>.Sort.Ascending(request.SortBy) :
-                   Builders<I>.Sort.Descending(request.SortBy);
+                if (!string.IsNullOrEmpty(request.Field) && !string.IsNullOrEmpty(request.Value))
+                {
+                    filterDefinition = filterDefinition & Builders<I>.Filter.Eq(request.Field, request.Value);
+                }
+
+                if (request.IsDeleted != null)
+                {
+                    filterDefinition = filterDefinition & Builders<I>.Filter.Eq(BaseConstant.IsDeleted, request.IsDeleted);
+                }
             }
             else
             {
                 filterDefinition = filterDefinition & Builders<I>.Filter.Eq(BaseConstant.IsDeleted, false);
             }
 
-            var count = await _mongoCollection.CountDocumentsAsync(filterDefinition);
             var query = _mongoCollection.Find(filterDefinition);
 
-            if (sort is not null)
+            if (request is not null && !request.FetchAll)
             {
-                query = query.Sort(sort);
-            }
+                sort = request.Ascending ?
+                   Builders<I>.Sort.Ascending(request.SortBy) :
+                   Builders<I>.Sort.Descending(request.SortBy);
 
-            if (request is not null)
-            {
+                query = query.Sort(sort);
+
                 if (request.Skip.HasValue && request.Skip.Value > 0)
                 {
                     query = query.Skip(request.Skip.Value);

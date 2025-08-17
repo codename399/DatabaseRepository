@@ -9,6 +9,9 @@ namespace DatabaseRepository.Model
         public string? SortBy { get; set; }
         public bool Ascending { get; set; }
         public bool? IsDeleted { get; set; }
+        public string? Field { get; set; }
+        public string? Value { get; set; }
+        public bool FetchAll { get; set; }
 
         public Request()
         {
@@ -17,6 +20,7 @@ namespace DatabaseRepository.Model
             SortBy = BaseConstant.CreationDateTime;
             Ascending = false;
             IsDeleted = false;
+            FetchAll = false;
         }
     }
 }
