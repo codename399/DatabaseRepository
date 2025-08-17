@@ -9,8 +9,7 @@ namespace DatabaseRepository.Model
         public string? SortBy { get; set; }
         public bool Ascending { get; set; }
         public bool? IsDeleted { get; set; }
-        public string? Field { get; set; }
-        public string? Value { get; set; }
+        public Dictionary<string,string>? filters { get; set; }
         public bool FetchAll { get; set; }
 
         public Request()

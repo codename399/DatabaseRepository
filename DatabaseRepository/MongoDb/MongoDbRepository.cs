@@ -91,9 +91,15 @@ namespace DatabaseRespository.MongoDb
 
             if (request is not null && !request.FetchAll)
             {
-                if (!string.IsNullOrEmpty(request.Field) && !string.IsNullOrEmpty(request.Value))
+                if (request.filters != null)
                 {
-                    filterDefinition = filterDefinition & Builders<I>.Filter.Eq(request.Field, request.Value);
+                    if (request.filters is { Count: > 0 })
+                    {
+                        foreach (var filter in request.filters)
+                        {
+                            filterDefinition = filterDefinition & Builders<I>.Filter.Eq(filter.ToString(), request.filters[filter.ToString()]);
+                        }
+                    }
                 }
 
                 if (request.IsDeleted != null)
