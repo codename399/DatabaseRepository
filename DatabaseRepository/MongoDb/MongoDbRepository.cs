@@ -86,7 +86,7 @@ namespace DatabaseRespository.MongoDb
                 {
                     if (request.Filters is { Count: > 0 })
                     {
-                        foreach (var filter in request.Filters)
+                        foreach (var filter in request.Filters.Keys)
                         {
                             filterDefinition = filterDefinition & Builders<I>.Filter.Eq(filter.ToString(), request.Filters[filter.ToString()]);
                         }
