@@ -78,8 +78,6 @@ namespace DatabaseRespository.MongoDb
 
         private async Task<PagedResponse<I>> Get(FilterDefinition<I> filterDefinition, Request? request = null)
         {
-            long count = await _mongoCollection.CountDocumentsAsync(filterDefinition);
-
             if (request is not null)
             {
                 if (request.Filters != null)
@@ -104,6 +102,7 @@ namespace DatabaseRespository.MongoDb
             }
 
             var query = _mongoCollection.Find(filterDefinition);
+            long count = await _mongoCollection.CountDocumentsAsync(filterDefinition);
 
             if (request is not null)
             {
