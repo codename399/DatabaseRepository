@@ -1,5 +1,7 @@
 ﻿using DatabaseRepository.Constants;
 using DatabaseRepository.Model;
+using DatabaseRepository.Model.Enum;
+using MongoDB.Bson;
 using MongoDB.Driver;
 
 namespace DatabaseRespository.MongoDb
@@ -84,9 +86,28 @@ namespace DatabaseRespository.MongoDb
                 {
                     if (request.Filters is { Count: > 0 })
                     {
-                        foreach (var filter in request.Filters.Keys)
+                        foreach (var filter in request.Filters)
                         {
-                            filterDefinition = filterDefinition & Builders<I>.Filter.Eq(filter.ToString(), request.Filters[filter.ToString()]);
+                            if (filter.Operator == OperatorType.Equal.ToString())
+                            {
+                                filterDefinition = filterDefinition & Builders<I>.Filter.Eq(filter.Key, filter.Value);
+                            }
+                            else if (filter.Operator == OperatorType.In.ToString())
+                            {
+                                filterDefinition = filterDefinition & Builders<I>.Filter.In(filter.Key, filter.Value);
+                            }
+                            else if (filter.Operator == OperatorType.Like.ToString())
+                            {
+                                filterDefinition = filterDefinition & Builders<I>.Filter.Regex(filter.Key, new BsonRegularExpression(filter.Value, "i"));
+                            }
+                            else if (filter.Operator == OperatorType.StartsWith.ToString())
+                            {
+                                filterDefinition = filterDefinition & Builders<I>.Filter.Regex(filter.Key, new BsonRegularExpression($"^{filter.Value}", "i"));
+                            }
+                            else if (filter.Operator == OperatorType.EndsWith.ToString())
+                            {
+                                filterDefinition = filterDefinition & Builders<I>.Filter.Regex(filter.Key, new BsonRegularExpression($"{filter.Value}$", "i"));
+                            }
                         }
                     }
                 }
