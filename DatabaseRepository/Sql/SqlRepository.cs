@@ -40,11 +40,6 @@ namespace DatabaseRespository.Sql
             throw new NotImplementedException();
         }
 
-        public async Task<PagedResponse<I>> GetByField(FilterDefinition<I> filterDefinition, Request? request = null)
-        {
-            throw new NotImplementedException();
-        }
-
         public async Task<PagedResponse<I>> GetById(HashSet<string> ids, Request? request = null)
         {
             throw new NotImplementedException();

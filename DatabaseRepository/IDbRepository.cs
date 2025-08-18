@@ -15,6 +15,5 @@ namespace DatabaseRespository
         public Task Deactivate(HashSet<string> ids, bool isDeleted = false);
         public Task<PagedResponse<I>> GetAll(Request? request = null);
         public Task<PagedResponse<I>> GetById(HashSet<string> ids, Request? request = null);
-        public Task<PagedResponse<I>> GetByField(FilterDefinition<I> filterDefinition, Request? request = null);
     }
 }

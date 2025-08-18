@@ -67,13 +67,6 @@ namespace DatabaseRespository.MongoDb
             return await Get(filterDefinition, request);
         }
 
-        public async Task<PagedResponse<I>> GetByField(FilterDefinition<I> filterDefinition, Request? request = null)
-        {
-            filterDefinition = filterDefinition & Builders<I>.Filter.Empty;
-
-            return await Get(filterDefinition, request);
-        }
-
         public async Task<PagedResponse<I>> GetById(HashSet<string> ids, Request? request = null)
         {
             var builders = Builders<I>.Filter;
