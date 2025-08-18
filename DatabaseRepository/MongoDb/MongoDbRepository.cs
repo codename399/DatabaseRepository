@@ -82,13 +82,13 @@ namespace DatabaseRespository.MongoDb
 
             if (request is not null)
             {
-                if (request.filters != null)
+                if (request.Filters != null)
                 {
-                    if (request.filters is { Count: > 0 })
+                    if (request.Filters is { Count: > 0 })
                     {
-                        foreach (var filter in request.filters)
+                        foreach (var filter in request.Filters)
                         {
-                            filterDefinition = filterDefinition & Builders<I>.Filter.Eq(filter.ToString(), request.filters[filter.ToString()]);
+                            filterDefinition = filterDefinition & Builders<I>.Filter.Eq(filter.ToString(), request.Filters[filter.ToString()]);
                         }
                     }
                 }

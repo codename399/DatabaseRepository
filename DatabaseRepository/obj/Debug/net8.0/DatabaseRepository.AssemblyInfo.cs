@@ -15,7 +15,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyDescriptionAttribute("Common package for all database functions")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.16.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.16+8bcb8d728984639be36761f1e2b8e2e2f8f6dd28")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.16+dda84811437a80a086f43bd43983d36a154a5070")]
 [assembly: System.Reflection.AssemblyProductAttribute("DatabaseRepository")]
 [assembly: System.Reflection.AssemblyTitleAttribute("DatabaseRepository")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.16.0")]
