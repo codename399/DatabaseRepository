@@ -54,30 +54,56 @@ namespace DatabaseRespository.MongoDb
             {
                 if (collectionOption != null)
                 {
-                    if (collectionOption.UniqueColumns is { Count: > 0 })
+                    if (collectionOption.IndexOptions is { Count: > 0 })
                     {
-                        var indexes = _mongoCollection.Indexes.List();
-                        var indexList = await indexes.ToListAsync();
-                        if (!indexList.Any(index => index["name"] == collectionOption.IndexName))
+                        foreach (IndexOption indexOption in collectionOption.IndexOptions)
                         {
-                            CreateIndex(collectionOption);
+                            var indexes = _mongoCollection.Indexes.List();
+                            var indexList = await indexes.ToListAsync();
+                            if (!indexList.Any(index => index["name"] == indexOption.Name))
+                            {
+                                if (indexOption.IsCombined)
+                                {
+                                    CreateCombinedIndex(indexOption);
+                                }
+                                else
+                                {
+                                    CreateIndex(indexOption);
+                                }
+                            }
                         }
                     }
                 }
             }
         }
 
-        private async Task CreateIndex(CollectionOption? collectionOption)
+        private async Task CreateIndex(IndexOption indexOption)
+        {
+            HashSet<CreateIndexModel<I>> createIndexModels = new HashSet<CreateIndexModel<I>>();
+            CreateIndexOptions createIndexOptions = new CreateIndexOptions() { Unique = true };
+
+            foreach (string column in indexOption.Columns)
+            {
+                IndexKeysDefinition<I> indexKeysDefinition = Builders<I>.IndexKeys.Ascending(column);
+                createIndexOptions.Name = $"{indexOption.Name}_{column}";
+                CreateIndexModel<I> createIndexModel = new CreateIndexModel<I>(indexKeysDefinition, createIndexOptions);
+                createIndexModels.Add(createIndexModel);
+            }
+
+            await _mongoCollection.Indexes.CreateManyAsync(createIndexModels);
+        }
+
+        private async Task CreateCombinedIndex(IndexOption indexOption)
         {
             IndexKeysDefinition<I> indexDefinition = null;
 
-            foreach (string column in collectionOption.UniqueColumns)
+            foreach (string column in indexOption.Columns)
             {
                 IndexKeysDefinition<I> tempDefinition = Builders<I>.IndexKeys.Ascending(column);
                 indexDefinition = indexDefinition == null ? tempDefinition : Builders<I>.IndexKeys.Combine(indexDefinition, tempDefinition);
             }
 
-            CreateIndexOptions createIndexOptions = new CreateIndexOptions() { Unique = true, Name = collectionOption.IndexName };
+            CreateIndexOptions createIndexOptions = new CreateIndexOptions() { Unique = true, Name = $"{indexOption.Name}_Compound" };
             CreateIndexModel<I> createIndexModel = new CreateIndexModel<I>(indexDefinition, createIndexOptions);
 
             await _mongoCollection.Indexes.CreateOneAsync(createIndexModel);
