@@ -12,10 +12,17 @@ namespace DatabaseRespository.MongoDb
         private IMongoDatabase _database;
         private IMongoCollection<I> _mongoCollection;
 
-        public MongoDbRepository(string connectionString, string databaseName, string tableName)
+        public MongoDbRepository(string connectionString, string databaseName, string tableName, CollectionOption? collectioOption = null)
         {
             CreateClient(connectionString, databaseName);
-            CreateTableAndIndexes(tableName);
+            if (collectioOption != null)
+            {
+                CreateTableAndIndexes(tableName, collectioOption);
+            }
+            else
+            {
+                CreateTableAndIndexes(tableName);
+            }
         }
 
         public async Task Add(HashSet<I> items)
@@ -39,15 +46,41 @@ namespace DatabaseRespository.MongoDb
             _database = _mongoClient.GetDatabase(databaseName);
         }
 
-        public void CreateTableAndIndexes(string tableName)
+        public async Task CreateTableAndIndexes(string tableName, CollectionOption? collectionOption)
         {
-            _mongoCollection = _database.GetCollection<I>(tableName);
+            CreateTableAndIndexes(tableName);
 
-            if (_mongoCollection == null)
+            if (_mongoCollection != null)
             {
-                _database.CreateCollection(tableName);
-                _mongoCollection = _database.GetCollection<I>(tableName);
+                if (collectionOption != null)
+                {
+                    if (collectionOption.UniqueColumns is { Count: > 0 })
+                    {
+                        var indexes = _mongoCollection.Indexes.List();
+                        var indexList = await indexes.ToListAsync();
+                        if (!indexList.Any(index => index["name"] == collectionOption.IndexName))
+                        {
+                            CreateIndex(collectionOption);
+                        }
+                    }
+                }
             }
+        }
+
+        private async Task CreateIndex(CollectionOption? collectionOption)
+        {
+            IndexKeysDefinition<I> indexDefinition = null;
+
+            foreach (string column in collectionOption.UniqueColumns)
+            {
+                IndexKeysDefinition<I> tempDefinition = Builders<I>.IndexKeys.Ascending(column);
+                indexDefinition = indexDefinition == null ? tempDefinition : Builders<I>.IndexKeys.Combine(indexDefinition, tempDefinition);
+            }
+
+            CreateIndexOptions createIndexOptions = new CreateIndexOptions() { Unique = true, Name = collectionOption.IndexName };
+            CreateIndexModel<I> createIndexModel = new CreateIndexModel<I>(indexDefinition, createIndexOptions);
+
+            await _mongoCollection.Indexes.CreateOneAsync(createIndexModel);
         }
 
         public async Task Delete(HashSet<string> ids)
@@ -170,6 +203,17 @@ namespace DatabaseRespository.MongoDb
             UpdateDefinition<I> update = Builders<I>.Update.Set(BaseConstant.IsDeleted, isDeleted);
 
             await _mongoCollection.UpdateManyAsync(filter, update);
+        }
+
+        public void CreateTableAndIndexes(string tableName)
+        {
+            _mongoCollection = _database.GetCollection<I>(tableName);
+
+            if (_mongoCollection == null)
+            {
+                _database.CreateCollection(tableName);
+                _mongoCollection = _database.GetCollection<I>(tableName);
+            }
         }
     }
 }
