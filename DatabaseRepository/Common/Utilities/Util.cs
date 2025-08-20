@@ -35,19 +35,5 @@ namespace DatabaseRepository.Common.Utilities
         {
             return Guid.TryParse(id, out Guid guid) && guid != Guid.Empty;
         }
-
-        public static CollectionOption GetCollectionOption(string indexName, HashSet<string> columnNames)
-        {
-            return new CollectionOption()
-            {
-                IndexOptions = [
-                     new IndexOption()
-                        {
-                            Name= indexName,
-                            Columns = columnNames
-                     }
-                     ]
-            };
-        }
     }
 }

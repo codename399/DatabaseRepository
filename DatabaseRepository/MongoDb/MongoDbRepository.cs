@@ -84,7 +84,7 @@ namespace DatabaseRespository.MongoDb
 
             foreach (string column in indexOption.Columns)
             {
-                IndexKeysDefinition<I> indexKeysDefinition = Builders<I>.IndexKeys.Ascending(column);
+                IndexKeysDefinition<I> indexKeysDefinition = indexOption.Ascending ? Builders<I>.IndexKeys.Ascending(column) : Builders<I>.IndexKeys.Descending(column);
                 createIndexOptions.Name = $"{indexOption.Name}_{column}";
                 CreateIndexModel<I> createIndexModel = new CreateIndexModel<I>(indexKeysDefinition, createIndexOptions);
                 createIndexModels.Add(createIndexModel);
@@ -99,7 +99,7 @@ namespace DatabaseRespository.MongoDb
 
             foreach (string column in indexOption.Columns)
             {
-                IndexKeysDefinition<I> tempDefinition = Builders<I>.IndexKeys.Ascending(column);
+                IndexKeysDefinition<I> tempDefinition = indexOption.Ascending ? Builders<I>.IndexKeys.Ascending(column) : Builders<I>.IndexKeys.Descending(column);
                 indexDefinition = indexDefinition == null ? tempDefinition : Builders<I>.IndexKeys.Combine(indexDefinition, tempDefinition);
             }
 
