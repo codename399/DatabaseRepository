@@ -6,7 +6,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
 
-namespace GameStash.Extensions
+namespace DatabaseRepository.Extensions
 {
     public static class AuthenticationServiceExtension
     {
