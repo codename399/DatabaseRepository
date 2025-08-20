@@ -3,6 +3,7 @@ using DatabaseRepository.Helper;
 using DatabaseRepository.Model;
 using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
+using System.Reflection.Metadata;
 using System.Security.Claims;
 using System.Text;
 
@@ -33,6 +34,20 @@ namespace DatabaseRepository.Common.Utilities
         public static bool IsValidGuid(string id)
         {
             return Guid.TryParse(id, out Guid guid) && guid != Guid.Empty;
+        }
+
+        public static CollectionOption GetCollectionOption(string indexName, HashSet<string> columnNames)
+        {
+            return new CollectionOption()
+            {
+                IndexOptions = [
+                     new IndexOption()
+                        {
+                            Name= indexName,
+                            Columns = columnNames
+                     }
+                     ]
+            };
         }
     }
 }
