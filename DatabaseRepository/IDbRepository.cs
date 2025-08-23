@@ -8,6 +8,7 @@ namespace DatabaseRespository
         public void CreateClient(string connectionString, string databaseName);
         public T GetClient();
         public IMongoDatabase GetDatabase();
+        public IMongoCollection<I> GetCollection();
         public void CreateTableAndIndexes(string tableName);
         public Task Add(HashSet<I> items);
         public Task Update(FilterDefinition<I> filterDefinition, UpdateDefinition<I> updateDefinition, bool upsert);

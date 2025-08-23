@@ -246,5 +246,10 @@ namespace DatabaseRespository.MongoDb
         {
             return _database;
         }
+
+        public IMongoCollection<I> GetCollection()
+        {
+            return _mongoCollection;
+        }
     }
 }
