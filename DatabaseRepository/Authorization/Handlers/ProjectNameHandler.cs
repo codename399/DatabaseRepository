@@ -14,9 +14,15 @@ namespace DatabaseRepository.Authorization.Handlers
                 return Task.CompletedTask;
             }
 
-            string role = context.User.FindFirst(c => c.Type == ClaimTypes.Role)?.Value ?? string.Empty;
+            if (!context.User.HasClaim(c => c.Type == requirement.ProjectName))
+            {
+                return Task.CompletedTask;
+            }
 
-            if (context.User.HasClaim(c => c.Type == requirement.ProjectName) || role == BaseConstant.Admin)
+            string role = context.User.FindFirst(c => c.Type == ClaimTypes.Role)?.Value ?? string.Empty;
+            string isAdmin = context.User.FindFirst(c => c.Type == requirement.ProjectName)?.Value.ToLower() ?? "false";
+
+            if (Convert.ToBoolean(isAdmin) == false || role == BaseConstant.Admin)
             {
                 context.Succeed(requirement);
             }
