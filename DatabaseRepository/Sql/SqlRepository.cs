@@ -54,5 +54,10 @@ namespace DatabaseRespository.Sql
         {
             throw new NotImplementedException();
         }
+
+        public IMongoDatabase GetDatabase()
+        {
+            throw new NotImplementedException();
+        }
     }
 }
