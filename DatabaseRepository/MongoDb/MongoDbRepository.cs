@@ -153,7 +153,7 @@ namespace DatabaseRespository.MongoDb
                             }
                             else if (filter.Operator == OperatorType.In.ToString())
                             {
-                                filterDefinition = filterDefinition & Builders<I>.Filter.In(filter.Key, filter.Value);
+                                filterDefinition = filterDefinition & Builders<I>.Filter.In(filter.Key, filter.Values);
                             }
                             else if (filter.Operator == OperatorType.Like.ToString())
                             {
