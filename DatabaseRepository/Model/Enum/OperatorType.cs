@@ -6,6 +6,8 @@ namespace DatabaseRepository.Model.Enum
     {
         [EnumMember(Value = "Equal")]
         Equal,
+        [EnumMember(Value = "AnyEq")]
+        AnyEq,
         [EnumMember(Value = "In")]
         In,
         [EnumMember(Value = "Like")]

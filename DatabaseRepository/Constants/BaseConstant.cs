@@ -16,6 +16,8 @@
         public const string EmailId = "EmailId";
         public const string ContactNumber = "ContactNumber";
         public const string Description = "Description";
+        public const string Title = "Title";
+        public const string Project = "Project";
         public const string Route = "Route";
         public const string PasswordBasedAuthenticationConfig = "PasswordBasedAuthenticationConfig";
         public const string OTPBasedAuthenticationConfig = "OTPBasedAuthenticationConfig";

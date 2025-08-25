@@ -151,6 +151,10 @@ namespace DatabaseRespository.MongoDb
                             {
                                 filterDefinition = filterDefinition & Builders<I>.Filter.Eq(filter.Key, filter.Value);
                             }
+                            else if (filter.Operator == OperatorType.AnyEq.ToString())
+                            {
+                                filterDefinition = filterDefinition & Builders<I>.Filter.AnyEq(filter.Key, filter.Value);
+                            }
                             else if (filter.Operator == OperatorType.In.ToString())
                             {
                                 filterDefinition = filterDefinition & Builders<I>.Filter.In(filter.Key, filter.Values);
