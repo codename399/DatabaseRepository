@@ -2,7 +2,6 @@
 using DatabaseRespository.Model;
 using DatabaseRespository.Model.Dto;
 using DatabaseRespository.MongoDb;
-using Microsoft.Extensions.Options;
 
 namespace DatabaseRespository.Repositories.Abstractions
 {
@@ -11,10 +10,10 @@ namespace DatabaseRespository.Repositories.Abstractions
         protected readonly IMongoDbRepository<T> _mongoDbRepository;
         private readonly MongoDatabaseSettingDto _databaseSetting;
 
-        public GlobalRepository(IOptions<MongoDatabaseSetting> databaseSetting, string tableName, CollectionOption? collectionOption = null)
+        public GlobalRepository(MongoDatabaseSetting databaseSetting, string tableName, CollectionOption? collectionOption = null)
         {
-            _databaseSetting = MongoDatabaseSetting.ToDto(databaseSetting.Value);
-            _mongoDbRepository = new MongoDbRepository<T>(_databaseSetting.ConnectionString ?? string.Empty, databaseSetting.Value.DatabaseName ?? string.Empty, tableName, collectionOption);
+            _databaseSetting = MongoDatabaseSetting.ToDto(databaseSetting);
+            _mongoDbRepository = new MongoDbRepository<T>(_databaseSetting.ConnectionString ?? string.Empty, databaseSetting.DatabaseName ?? string.Empty, tableName, collectionOption);
         }
     }
 }

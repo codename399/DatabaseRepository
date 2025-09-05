@@ -6,7 +6,7 @@
 		<Nullable>enable</Nullable>
 		<GeneratePackageOnBuild>true</GeneratePackageOnBuild>
 		<PackageId>CodeName399Repository</PackageId>
-		<Version>1.1.6</Version>
+		<Version>1.1.7</Version>
 		<Authors>AjayGaud</Authors>
 		<Description>Common package for all database functions</Description>
 	</PropertyGroup>
