@@ -12,12 +12,12 @@ namespace DatabaseRespository.MongoDb
         private IMongoDatabase _database;
         private IMongoCollection<I> _mongoCollection;
 
-        public MongoDbRepository(string connectionString, string databaseName, string tableName, CollectionOption? collectioOption = null)
+        public MongoDbRepository(string connectionString, string databaseName, string tableName, CollectionOption? collectionOption = null)
         {
             CreateClient(connectionString, databaseName);
-            if (collectioOption != null)
+            if (collectionOption != null)
             {
-                CreateTableAndIndexes(tableName, collectioOption);
+                CreateTableAndIndexes(tableName, collectionOption);
             }
             else
             {
