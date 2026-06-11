@@ -64,5 +64,10 @@ namespace DatabaseRespository
         {
             throw new NotImplementedException();
         }
+
+        public Task<PagedResponse<I>> Get(FilterDefinition<I> filterDefinition, Request? request = null)
+        {
+            throw new NotImplementedException();
+        }
     }
 }
