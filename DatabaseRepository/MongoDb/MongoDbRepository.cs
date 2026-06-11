@@ -137,7 +137,7 @@ namespace DatabaseRespository.MongoDb
             return await Get(filterDefinition, request);
         }
 
-        private async Task<PagedResponse<I>> Get(FilterDefinition<I> filterDefinition, Request? request = null)
+        public async Task<PagedResponse<I>> Get(FilterDefinition<I> filterDefinition, Request? request = null)
         {
             if (request is not null)
             {
