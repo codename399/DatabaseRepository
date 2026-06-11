@@ -7,6 +7,7 @@ using System.Net;
 using System.Net.Mail;
 using System.Reflection.Metadata;
 using System.Security.Claims;
+using System.Security.Cryptography;
 using System.Text;
 
 namespace DatabaseRepository.Common.Utilities
@@ -31,6 +32,16 @@ namespace DatabaseRepository.Common.Utilities
             var jwtToken = new JwtSecurityTokenHandler().WriteToken(token);
 
             return jwtToken;
+        }
+
+        public static string GenerateRefreshToken()
+        {
+            byte[] bytes = new byte[64];
+
+            using var rng = RandomNumberGenerator.Create();
+            rng.GetBytes(bytes);
+
+            return Convert.ToBase64String(bytes);
         }
 
         public static bool IsValidGuid(string id)
