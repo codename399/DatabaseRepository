@@ -70,7 +70,7 @@ namespace DatabaseRespository
             throw new NotImplementedException();
         }
 
-        public Task Deactivate(FilterDefinition<I> filterDefinition)
+        public Task Deactivate(FilterDefinition<I> filterDefinition, bool isDeleted = false)
         {
             throw new NotImplementedException();
         }
