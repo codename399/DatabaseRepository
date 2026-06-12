@@ -69,5 +69,10 @@ namespace DatabaseRespository.Sql
         {
             throw new NotImplementedException();
         }
+
+        public Task Deactivate(FilterDefinition<I> filterDefinition)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

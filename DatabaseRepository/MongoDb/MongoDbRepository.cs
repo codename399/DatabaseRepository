@@ -235,6 +235,13 @@ namespace DatabaseRespository.MongoDb
             await _mongoCollection.UpdateManyAsync(filter, update);
         }
 
+        public async Task Deactivate(FilterDefinition<I> filterDefinition, bool isDeleted = false)
+        {
+            UpdateDefinition<I> update = Builders<I>.Update.Set(BaseConstant.IsDeleted, isDeleted);
+
+            await _mongoCollection.UpdateManyAsync(filterDefinition, update);
+        }
+
         public void CreateTableAndIndexes(string tableName)
         {
             _mongoCollection = _database.GetCollection<I>(tableName);
