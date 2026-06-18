@@ -8,6 +8,7 @@ using System.Net.Mail;
 using System.Security.Claims;
 using System.Security.Cryptography;
 using System.Text;
+using System.Text.Json;
 
 namespace DatabaseRepository.Common.Utilities
 {
@@ -16,7 +17,7 @@ namespace DatabaseRepository.Common.Utilities
         public static string GenerateJwtToken(HashSet<Claim> claims, string configSectionName = BaseConstant.AuthenticationConfig)
         {
             AuthenticationConfig authenticationConfig = AppSettingsHelper.GetConfiguration<AuthenticationConfig>(configSectionName) ?? new AuthenticationConfig();
-
+            Console.WriteLine("GenerateJwtToken: " + JsonSerializer.Serialize(authenticationConfig));
             var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(authenticationConfig.SecretKey ?? string.Empty));
 
             var creds = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);

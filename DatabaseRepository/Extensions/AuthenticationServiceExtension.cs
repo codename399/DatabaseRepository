@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
+using System.Text.Json;
 
 namespace DatabaseRepository.Extensions
 {
@@ -13,7 +14,7 @@ namespace DatabaseRepository.Extensions
         public static void AddJwtAuthentication(this IServiceCollection services, string configSectionName = BaseConstant.AuthenticationConfig)
         {
             AuthenticationConfig authenticationConfig = AppSettingsHelper.GetConfiguration<AuthenticationConfig>(configSectionName) ?? new AuthenticationConfig();
-
+            Console.WriteLine("AddJwtAuthentication: " + JsonSerializer.Serialize(authenticationConfig));
             services.AddAuthentication((options) =>
             {
                 options.DefaultAuthenticateScheme = authenticationConfig.AuthenticateScheme ?? JwtBearerDefaults.AuthenticationScheme;
