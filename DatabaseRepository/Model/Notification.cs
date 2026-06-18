@@ -1,6 +1,4 @@
-﻿using DatabaseRepository.Model.Enum;
-
-namespace DatabaseRepository.Model
+﻿namespace DatabaseRepository.Model
 {
     public class Notification : Audit
     {
