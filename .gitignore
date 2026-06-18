@@ -2,8 +2,6 @@
 # This .gitignore file was automatically created by Microsoft(R) Visual Studio.
 ################################################################################
 
-/.vs/DatabaseRepository/FileContentIndex/4e6fb502-45c8-4a0a-81e9-25c51d39fdc7.vsidx
-/DatabaseRepository/bin/Debug/net8.0
-/.vs/DatabaseRepository/CopilotIndices/17.13.433.20974
-/.vs/DatabaseRepository/DesignTimeBuild
-/DatabaseRepository/bin/Release
+/.vs
+/DatabaseRepository/bin
+/DatabaseRepository/obj
