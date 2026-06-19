@@ -2,9 +2,12 @@
 using DatabaseRepository.Helper;
 using DatabaseRepository.Model;
 using Microsoft.IdentityModel.Tokens;
+using OtpNet;
 using System.IdentityModel.Tokens.Jwt;
 using System.Net;
 using System.Net.Mail;
+using System.Net.NetworkInformation;
+using System.Net.Sockets;
 using System.Security.Claims;
 using System.Security.Cryptography;
 using System.Text;
@@ -17,7 +20,7 @@ namespace DatabaseRepository.Common.Utilities
         public static string GenerateJwtToken(HashSet<Claim> claims, string configSectionName = BaseConstant.AuthenticationConfig)
         {
             AuthenticationConfig authenticationConfig = AppSettingsHelper.GetConfiguration<AuthenticationConfig>(configSectionName) ?? new AuthenticationConfig();
-            Console.WriteLine("GenerateJwtToken: " + JsonSerializer.Serialize(authenticationConfig));
+            
             var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(authenticationConfig.SecretKey ?? string.Empty));
 
             var creds = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
@@ -90,6 +93,37 @@ namespace DatabaseRepository.Common.Utilities
             }
 
             smtpClient.Send(mail);
+        }
+
+        public static string GetMacAddress()
+        {
+            var networkInterface = NetworkInterface
+                .GetAllNetworkInterfaces()
+                .FirstOrDefault(x =>
+                    x.OperationalStatus == OperationalStatus.Up
+                    && x.NetworkInterfaceType != NetworkInterfaceType.Loopback
+                    && x.GetPhysicalAddress().GetAddressBytes().Length > 0);
+
+            return networkInterface?
+                .GetPhysicalAddress()
+                .ToString() ?? string.Empty;
+        }
+
+        public static string GetLocalIp()
+        {
+            return Dns.GetHostAddresses(Dns.GetHostName())
+            .FirstOrDefault(x => x.AddressFamily == AddressFamily.InterNetwork)?
+            .ToString() ?? string.Empty;
+        }
+
+        public static string GenerateTOtp(string secret)
+        {
+            var secretBytes =
+                Base32Encoding.ToBytes(secret);
+
+            var totp = new Totp(secretBytes);
+
+            return totp.ComputeTotp();
         }
     }
 }
