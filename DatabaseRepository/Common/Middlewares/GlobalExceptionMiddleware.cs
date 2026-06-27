@@ -1,4 +1,5 @@
-﻿using DatabaseRepository.Model;
+﻿using DatabaseRepository.Common.Utilities;
+using DatabaseRepository.Model;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Logging;
 using System.Text.Json;
@@ -60,6 +61,20 @@ namespace DatabaseRepository.Common.Middlewares
                     Message = message,
                     Detail = ex.Message // Optional: Remove in production for security
                 };
+
+                EmailNotificationConfig emailNotificationConfig = new()
+                {
+                    Body = ex.Message,
+                    Subject = "Codename399 Exception",
+                    To = "ajay.gaud@codename399.com",
+                    SmtpUser = "admin@codename399.com",
+                    SmtpHost = "smtp.zoho.in",
+                    SmtpPort = 587,
+                    SmtpPassword = "AVGavg@132",
+                    IsHtml = false
+                };
+
+                Util.SendEmailNotification(emailNotificationConfig);
 
                 await context.Response.WriteAsync(JsonSerializer.Serialize(response));
             }
